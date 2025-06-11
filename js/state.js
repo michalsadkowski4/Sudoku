@@ -10,6 +10,9 @@ const state = {
     currentErrors: [],
     isAutoNotesModeActive: false,
     highlightedNumber: 0,
+    // Nowe zmienne dla zegara
+    timerInterval: null,
+    elapsedSeconds: 0,
 };
 
 export function getGameState() {
@@ -44,7 +47,7 @@ export function updateNotes(row, col, value) {
         } else {
             notes.add(value);
         }
-        state.currentSudokuBoard[row][col] = 0; // Wpisanie notatki czyści główną cyfrę
+        state.currentSudokuBoard[row][col] = 0;
     }
 }
 
@@ -81,4 +84,20 @@ export function setAllNotes(notes) {
 
 export function setHighlightedNumber(num) {
     state.highlightedNumber = num;
+}
+
+// Nowe funkcje do zarządzania stanem zegara
+export function setTimerInterval(intervalId) {
+    state.timerInterval = intervalId;
+}
+
+export function clearTimerInterval() {
+    if (state.timerInterval) {
+        clearInterval(state.timerInterval);
+        state.timerInterval = null;
+    }
+}
+
+export function setElapsedSeconds(seconds) {
+    state.elapsedSeconds = seconds;
 }

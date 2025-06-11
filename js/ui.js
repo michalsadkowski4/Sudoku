@@ -9,7 +9,13 @@ export const dom = {
     eraseModeBtn: document.getElementById('eraseModeBtn'),
     autoNotesToggleBtn: document.getElementById('autoNotesCheatBtn'),
     difficultySelect: document.getElementById('difficultySelect'),
-    body: document.body
+    body: document.body,
+    timer: document.getElementById('timer'),
+    // Nowe elementy DOM dla modala
+    winModal: document.getElementById('winModal'),
+    winDifficulty: document.getElementById('winDifficulty'),
+    winTime: document.getElementById('winTime'),
+    closeWinModalBtn: document.getElementById('closeWinModalBtn'),
 };
 
 export function setupNumberSelector(handler) {
@@ -24,19 +30,24 @@ export function setupNumberSelector(handler) {
     }
 }
 
+export function renderEmptyBoard() {
+    dom.sudokuGrid.innerHTML = '';
+    for (let r = 0; r < 9; r++) {
+        for (let c = 0; c < 9; c++) {
+            const cell = document.createElement('div');
+            cell.dataset.row = r;
+            cell.dataset.col = c;
+            dom.sudokuGrid.appendChild(cell);
+        }
+    }
+    updateTimerDisplay(0);
+}
+
 export function renderBoard() {
     const { currentSudokuBoard, initialSudokuBoard, currentNotes, selectedCell, currentErrors, highlightedNumber } = getGameState();
 
-    if (dom.sudokuGrid.children.length === 0) {
-        dom.sudokuGrid.innerHTML = '';
-        for (let r = 0; r < 9; r++) {
-            for (let c = 0; c < 9; c++) {
-                const cell = document.createElement('div');
-                cell.dataset.row = r;
-                cell.dataset.col = c;
-                dom.sudokuGrid.appendChild(cell);
-            }
-        }
+    if (dom.sudokuGrid.children.length === 0 || !dom.sudokuGrid.querySelector('[data-row="0"]')) {
+        renderEmptyBoard();
     }
 
     for (let r = 0; r < 9; r++) {
@@ -44,9 +55,9 @@ export function renderBoard() {
             const cell = dom.sudokuGrid.querySelector(`[data-row="${r}"][data-col="${c}"]`);
             if (!cell) continue;
 
-            const currentNumber = currentSudokuBoard[r][c];
-            const isInitial = initialSudokuBoard[r][c] !== 0;
-            const currentCellNotes = currentNotes[r][c];
+            const currentNumber = currentSudokuBoard[r][c] || 0;
+            const isInitial = initialSudokuBoard.length > 0 && initialSudokuBoard[r][c] !== 0;
+            const currentCellNotes = currentNotes.length > 0 ? currentNotes[r][c] : new Set();
 
             cell.textContent = '';
             cell.classList.remove('cell-initial', 'cell-selected', 'cell-error', 'cell-highlighted-number');
@@ -89,6 +100,26 @@ export function updateAutoNotesButton() {
     const { isAutoNotesModeActive } = getGameState();
     dom.autoNotesToggleBtn.classList.toggle('active', isAutoNotesModeActive);
     dom.autoNotesToggleBtn.textContent = `Auto Notatki: ${isAutoNotesModeActive ? 'WŁ.' : 'WYŁ.'}`;
+}
+
+export function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+}
+
+export function updateTimerDisplay(seconds) {
+    dom.timer.textContent = formatTime(seconds);
+}
+
+export function showWinModal(difficulty, time) {
+    dom.winDifficulty.textContent = difficulty;
+    dom.winTime.textContent = time;
+    dom.winModal.classList.add('show');
+}
+
+export function hideWinModal() {
+    dom.winModal.classList.remove('show');
 }
 
 export function handleThemeToggle() {

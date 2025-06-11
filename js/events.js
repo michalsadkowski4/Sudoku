@@ -56,6 +56,9 @@ export function initializeEventListeners() {
             ui.renderBoard();
         }
     });
+
+    // Nowy event listener dla przycisku zamykania modala
+    ui.dom.closeWinModalBtn.addEventListener('click', ui.hideWinModal);
     
     // Keyboard interaction
     document.addEventListener('keydown', handleKeyDown);

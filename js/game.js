@@ -5,6 +5,57 @@ import * as state from './state.js';
 import * as ui from './ui.js';
 import { calculateAndSetAutoNotes } from './autoNotes.js';
 
+// --- LOGIKA ZEGARA ---
+function startTimer() {
+    state.clearTimerInterval();
+    state.setElapsedSeconds(0);
+    ui.updateTimerDisplay(0);
+
+    const intervalId = setInterval(() => {
+        const newTime = state.getGameState().elapsedSeconds + 1;
+        state.setElapsedSeconds(newTime);
+        ui.updateTimerDisplay(newTime);
+    }, 1000);
+    state.setTimerInterval(intervalId);
+}
+
+function stopTimer() {
+    state.clearTimerInterval();
+}
+
+// --- LOGIKA WYGRANEJ ---
+function checkWinCondition() {
+    const { currentSudokuBoard } = state.getGameState();
+    
+    // Sprawdź, czy plansza jest pełna
+    const isFull = !currentSudokuBoard.some(row => row.includes(0));
+    if (!isFull) {
+        return; // Jeśli nie jest pełna, nie ma wygranej
+    }
+
+    // Jeśli jest pełna, sprawdź błędy
+    const errors = getErrors(currentSudokuBoard, state.getGameState().initialSudokuBoard);
+    if (errors.length === 0) {
+        handleWin();
+    }
+}
+
+function handleWin() {
+    stopTimer();
+    const { elapsedSeconds } = state.getGameState();
+    const difficultyMap = {
+        easy: 'Łatwy',
+        medium: 'Średni',
+        hard: 'Trudny',
+        veryHard: 'Bardzo Trudny'
+    };
+    const difficulty = difficultyMap[ui.dom.difficultySelect.value] || 'Niestandardowy';
+    const time = ui.formatTime(elapsedSeconds);
+    
+    ui.showWinModal(difficulty, time);
+}
+
+// --- GŁÓWNE FUNKCJE GRY ---
 export function startNewGame() {
     const difficulty = ui.dom.difficultySelect.value;
     const newBoard = generateSudoku(difficulty);
@@ -17,6 +68,7 @@ export function startNewGame() {
     
     ui.renderBoard();
     ui.updateAutoNotesButton();
+    startTimer();
 }
 
 export function resetBoard() {
@@ -26,6 +78,8 @@ export function resetBoard() {
         state.setAutoNotesActive(false);
         ui.updateAutoNotesButton();
         ui.renderBoard();
+        stopTimer();
+        ui.updateTimerDisplay(0);
     }
 }
 
@@ -64,6 +118,11 @@ export function handleNumberInput(num) {
     } else {
         ui.renderBoard();
     }
+
+    // Po każdej wstawionej liczbie sprawdź warunek wygranej
+    if (currentMode === 'number') {
+        checkWinCondition();
+    }
 }
 
 export function handleErase() {
@@ -81,19 +140,6 @@ export function handleErase() {
         calculateAndSetAutoNotes();
     } else {
         ui.renderBoard();
-    }
-}
-
-export function performErrorCheck() {
-    const { currentSudokuBoard, initialSudokuBoard } = state.getGameState();
-    const errors = getErrors(currentSudokuBoard, initialSudokuBoard);
-    state.setErrors(errors);
-    ui.renderBoard();
-    
-    if (errors.length === 0) {
-        alert("Brak błędów na planszy!");
-    } else {
-        alert(`Znaleziono ${errors.length} błędnych komórek.`);
     }
 }
 
