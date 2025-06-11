@@ -66,32 +66,16 @@ button.active {
     overflow: hidden;
 }
 
-/* Animacje pojawiania się i znikania */
+/* Animacje */
 @keyframes notesFadeIn {
     from { opacity: 0; transform: translateY(5px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes notesFadeOut {
-    from { opacity: 1; transform: translateY(0); }
-    to { opacity: 0; transform: translateY(-5px); }
-}
-
-.notes-fade-in {
-    animation: notesFadeIn 0.2s ease-out forwards;
-}
-
-.notes-fade-out {
-    animation: notesFadeOut 0.2s ease-in forwards;
-}
-
-/* Media queries dla komponentów */
+/* Media queries */
 @media (min-width: 1920px) {
     .cell-notes {
         font-size: 0.8rem;
-        top: 3px;
-        left: 5px;
-        width: calc(100% - 10px);
     }
     .number-selector button {
         width: 70px;
@@ -100,9 +84,9 @@ button.active {
     }
 }
 
-/* NOWE STYLE: Okno modalne */
+/* Style okna modalnego */
 .modal {
-    display: none; /* Domyślnie ukryte */
+    display: none;
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -116,7 +100,7 @@ button.active {
 }
 
 .modal.show {
-    display: flex; /* Pokazane po dodaniu klasy .show */
+    display: flex;
 }
 
 .modal-content {
@@ -136,7 +120,25 @@ button.active {
     color: var(--button-bg);
 }
 
-.modal-content button {
+.modal-content .confirm-btn {
     margin-top: 15px;
     padding: 12px 25px;
+}
+
+/* NOWE Style dla przycisków Tak/Nie */
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.modal-buttons .confirm-btn.yes {
+    background-color: #28a745;
+    color: white;
+}
+
+.modal-buttons .confirm-btn.no {
+    background-color: #dc3545;
+    color: white;
 }

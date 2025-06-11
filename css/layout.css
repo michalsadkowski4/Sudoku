@@ -31,13 +31,34 @@ body {
     align-items: center;
 }
 
-.game-container {
+/* NOWA STRUKTURA GŁÓWNA */
+.main-content {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     flex-grow: 1;
+    padding: 20px 40px;
+}
+
+/* NOWE STYLE DLA ZEGARA */
+.timer-container {
+    margin-bottom: 20px;
+}
+
+#timer {
+    font-size: 3.2rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: var(--text-color);
+}
+
+/* KONTENER NA PLANSZĘ I PANEL */
+.game-area-container {
+    display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 40px;
     gap: 40px;
+    width: 100%;
 }
 
 .side-panel {
@@ -59,7 +80,7 @@ body {
     .app-header {
         padding: 30px 60px;
     }
-    .game-container {
-        padding: 60px;
+    .main-content {
+        padding: 40px 60px;
     }
 }

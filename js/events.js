@@ -11,17 +11,25 @@ export function initializeEventListeners() {
         themeToggleBtn: document.getElementById('themeToggleBtn'),
     };
 
-    // Top controls
+    // Logika dla przycisków Nowa Gra i Reset z użyciem nowego modala
     staticDom.newGameBtn.addEventListener('click', () => {
-        if (confirm('Czy na pewno chcesz rozpocząć nową grę?')) {
-            game.startNewGame();
-        }
+        ui.showConfirmModal(
+            'Czy na pewno chcesz rozpocząć nową grę? Postępy zostaną utracone.',
+            game.startNewGame
+        );
     });
-    staticDom.resetBoardBtn.addEventListener('click', game.resetBoard);
+
+    staticDom.resetBoardBtn.addEventListener('click', () => {
+        ui.showConfirmModal(
+            'Czy na pewno chcesz zresetować planszę do stanu początkowego?',
+            game.resetBoard
+        );
+    });
+
     staticDom.checkErrorsBtn.addEventListener('click', game.performErrorCheck);
     staticDom.themeToggleBtn.addEventListener('click', ui.handleThemeToggle);
 
-    // Mode toggles
+    // Przełączniki trybów
     ui.dom.numberModeBtn.addEventListener('click', () => {
         state.setMode('number');
         ui.updateModeButtons();
@@ -37,7 +45,7 @@ export function initializeEventListeners() {
     });
     ui.dom.autoNotesToggleBtn.addEventListener('click', game.toggleAutoNotes);
     
-    // Grid interaction
+    // Interakcja z planszą
     ui.dom.sudokuGrid.addEventListener('click', (event) => {
         const cell = event.target.closest('div[data-row]');
         if (cell) {
@@ -47,7 +55,7 @@ export function initializeEventListeners() {
         }
     });
 
-    // Number selector interaction for highlighting
+    // Interakcja z panelem wyboru numerów
     ui.dom.numberSelector.addEventListener('click', (event) => {
         const button = event.target.closest('.num-selector-btn');
         if(button && button.dataset.number) {
@@ -57,10 +65,21 @@ export function initializeEventListeners() {
         }
     });
 
-    // Nowy event listener dla przycisku zamykania modala
+    // Listenery dla nowego modala potwierdzającego
+    ui.dom.confirmYesBtn.addEventListener('click', () => {
+        const action = state.getGameState().onConfirmAction;
+        if (typeof action === 'function') {
+            action();
+        }
+        ui.hideConfirmModal();
+    });
+
+    ui.dom.confirmNoBtn.addEventListener('click', ui.hideConfirmModal);
+
+    // Listener dla modala wygranej
     ui.dom.closeWinModalBtn.addEventListener('click', ui.hideWinModal);
     
-    // Keyboard interaction
+    // Interakcja z klawiaturą
     document.addEventListener('keydown', handleKeyDown);
 }
 

@@ -20,32 +20,32 @@
                 <option value="hard">Trudny</option>
                 <option value="veryHard">Bardzo Trudny</option>
             </select>
-            <span id="timer">00:00</span>
             <button id="checkErrorsBtn">Sprawdź Błędy</button>
             <button id="resetBoardBtn">Reset Planszy</button>
             <button id="themeToggleBtn">Zmień Motyw</button>
         </div>
     </header>
 
-    <main class="game-container">
-        <div class="sudoku-grid" id="sudokuGrid">
-            </div>
+    <main class="main-content">
+        <div class="timer-container">
+            <span id="timer">00:00</span>
+        </div>
 
-        <aside class="side-panel">
-            <div class="number-selector" id="numberSelector">
+        <div class="game-area-container">
+            <div class="sudoku-grid" id="sudokuGrid"></div>
+            <aside class="side-panel">
+                <div class="number-selector" id="numberSelector"></div>
+                <div class="mode-toggles">
+                    <button id="numberModeBtn" class="active">Tryb Liczb</button>
+                    <button id="notesModeBtn">Tryb Notatek</button>
+                    <button id="eraseModeBtn">Gumka</button>
+                    <button id="autoNotesCheatBtn">Auto Notatki: WYŁ.</button>
                 </div>
-
-            <div class="mode-toggles">
-                <button id="numberModeBtn" class="active">Tryb Liczb</button>
-                <button id="notesModeBtn">Tryb Notatek</button>
-                <button id="eraseModeBtn">Gumka</button>
-                <button id="autoNotesCheatBtn">Auto Notatki: WYŁ.</button>
-            </div>
-
-            <div class="solver-methods" id="solverMethods">
-                <h2>Metody Rozwiązywania</h2>
+                <div class="solver-methods" id="solverMethods">
+                    <h2>Metody Rozwiązywania</h2>
                 </div>
-        </aside>
+            </aside>
+        </div>
     </main>
     
     <div id="winModal" class="modal">
@@ -54,7 +54,18 @@
             <p>Ukończyłeś/aś Sudoku!</p>
             <p>Poziom trudności: <strong id="winDifficulty"></strong></p>
             <p>Twój czas: <strong id="winTime"></strong></p>
-            <button id="closeWinModalBtn">Zamknij</button>
+            <button id="closeWinModalBtn" class="confirm-btn">Zamknij</button>
+        </div>
+    </div>
+
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <h2 id="confirmTitle">Potwierdzenie</h2>
+            <p id="confirmMessage">Czy na pewno chcesz kontynuować?</p>
+            <div class="modal-buttons">
+                <button id="confirmYesBtn" class="confirm-btn yes">Tak</button>
+                <button id="confirmNoBtn" class="confirm-btn no">Nie</button>
+            </div>
         </div>
     </div>
     

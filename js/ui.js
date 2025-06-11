@@ -1,5 +1,5 @@
 // js/ui.js
-import { getGameState } from './state.js';
+import { getGameState, setOnConfirmAction } from './state.js';
 
 export const dom = {
     sudokuGrid: document.getElementById('sudokuGrid'),
@@ -11,11 +11,15 @@ export const dom = {
     difficultySelect: document.getElementById('difficultySelect'),
     body: document.body,
     timer: document.getElementById('timer'),
-    // Nowe elementy DOM dla modala
     winModal: document.getElementById('winModal'),
     winDifficulty: document.getElementById('winDifficulty'),
     winTime: document.getElementById('winTime'),
     closeWinModalBtn: document.getElementById('closeWinModalBtn'),
+    // Nowe elementy DOM dla modala potwierdzającego
+    confirmModal: document.getElementById('confirmModal'),
+    confirmMessage: document.getElementById('confirmMessage'),
+    confirmYesBtn: document.getElementById('confirmYesBtn'),
+    confirmNoBtn: document.getElementById('confirmNoBtn'),
 };
 
 export function setupNumberSelector(handler) {

@@ -6,13 +6,14 @@ const state = {
     initialSudokuBoard: [],
     currentNotes: [],
     selectedCell: { row: -1, col: -1 },
-    currentMode: 'number', // 'number', 'notes', 'erase'
+    currentMode: 'number',
     currentErrors: [],
     isAutoNotesModeActive: false,
     highlightedNumber: 0,
-    // Nowe zmienne dla zegara
     timerInterval: null,
     elapsedSeconds: 0,
+    // Nowe pole na akcję do potwierdzenia
+    onConfirmAction: () => {},
 };
 
 export function getGameState() {
@@ -86,7 +87,6 @@ export function setHighlightedNumber(num) {
     state.highlightedNumber = num;
 }
 
-// Nowe funkcje do zarządzania stanem zegara
 export function setTimerInterval(intervalId) {
     state.timerInterval = intervalId;
 }
@@ -100,4 +100,9 @@ export function clearTimerInterval() {
 
 export function setElapsedSeconds(seconds) {
     state.elapsedSeconds = seconds;
+}
+
+// Nowa funkcja do ustawiania akcji
+export function setOnConfirmAction(action) {
+    state.onConfirmAction = action;
 }
