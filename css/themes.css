@@ -1,0 +1,55 @@
+/* Jasny motyw (domyślny) */
+:root {
+    --background-color: #f0f2f5;
+    --text-color: #333;
+    --header-bg: #e0e2e5;
+    --button-bg: #007bff;
+    --button-text: #fff;
+    --active-button-bg: #0056b3;
+    --active-button-text: #fff;
+    --panel-bg: #ffffff;
+
+    --grid-border-color: #333;
+    --cell-border-color: #ccc;
+    --grid-background: #ffffff;
+
+    --cell-number-color: #333;
+    --initial-number-color: #000; /* Czarne dla liczb początkowych */
+    --note-color: #666;
+
+    --selected-cell-bg: #e6f7ff; /* Jasnoniebieski */
+    --highlight-cell-bg: #fff0b3; /* Jasnożółty */
+    --error-cell-bg: #ffe6e6; /* Jasnoróżowy */
+
+    --highlight-animation-color: rgba(255, 165, 0, 0.4);
+    --highlight-number-bg: #cceeff; /* Bardzo jasny błękit dla podświetlonych liczb */
+}
+
+/* Ciemny motyw */
+body.dark-theme {
+    /* Jaśniejsze tła */
+    --background-color: #3a3a3a;
+    --text-color: #e0e0e0;
+    --header-bg: #282828;
+    --button-bg: #0069d9;
+    --button-text: #f0f0f0;
+    --active-button-bg: #004d9c;
+    --active-button-text: #f0f0f0;
+    --panel-bg: #4c4c4c;
+
+    /* Jaśniejsze linie i tło planszy */
+    --grid-border-color: #cccccc;
+    --cell-border-color: #666;
+    --grid-background: #2a2a2a;
+
+    --cell-number-color: #e0e0e0;
+    --initial-number-color: #f0f0f0;
+    --note-color: #b0b0b0;
+
+    --selected-cell-bg: #5a5a5a;
+    --highlight-cell-bg: #7a7a7a;
+    --error-cell-bg: #8c4c4c;
+
+    --highlight-animation-color: rgba(255, 165, 0, 0.4);
+    --highlight-number-bg: #004c8c; /* Ciemniejszy błękit dla podświetlonych liczb */
+}

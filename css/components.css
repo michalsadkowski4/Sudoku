@@ -1,0 +1,101 @@
+/* Style dla przycisków i kontrolek */
+button, select {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s, transform 0.1s;
+    background-color: var(--button-bg);
+    color: var(--button-text);
+}
+
+button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+button.active {
+    background-color: var(--active-button-bg);
+    color: var(--active-button-text);
+}
+
+/* Panel wyboru numerów */
+.number-selector {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.number-selector button {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+}
+
+/* Przełączniki trybów */
+.mode-toggles, .solver-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.solver-methods h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+
+/* Notatki w komórkach */
+.cell-notes {
+    position: absolute;
+    top: 2px;
+    left: 4px;
+    width: calc(100% - 8px);
+    height: auto;
+    font-size: 0.3em;
+    font-weight: normal;
+    color: var(--note-color);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    line-height: 1;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* Animacje pojawiania się i znikania */
+@keyframes notesFadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes notesFadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-5px); }
+}
+
+.notes-fade-in {
+    animation: notesFadeIn 0.2s ease-out forwards;
+}
+
+.notes-fade-out {
+    animation: notesFadeOut 0.2s ease-in forwards;
+}
+
+/* Media queries dla komponentów */
+@media (min-width: 1920px) {
+    .cell-notes {
+        font-size: 0.8rem;
+        top: 3px;
+        left: 5px;
+        width: calc(100% - 10px);
+    }
+    .number-selector button {
+        width: 70px;
+        height: 70px;
+        font-size: 1.8rem;
+    }
+}

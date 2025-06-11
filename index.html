@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Pro</title>
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/grid.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <header class="app-header">
+        <h1>Sudoku Pro</h1>
+        <div class="controls-top">
+            <button id="newGameBtn">Nowa Gra</button>
+            <select id="difficultySelect">
+                <option value="easy">Łatwy</option>
+                <option value="medium">Średni</option>
+                <option value="hard">Trudny</option>
+                <option value="veryHard">Bardzo Trudny</option>
+            </select>
+            <span id="timer">00:00</span>
+            <button id="checkErrorsBtn">Sprawdź Błędy</button>
+            <button id="resetBoardBtn">Reset Planszy</button>
+            <button id="themeToggleBtn">Zmień Motyw</button>
+        </div>
+    </header>
+
+    <main class="game-container">
+        <div class="sudoku-grid" id="sudokuGrid">
+            </div>
+
+        <aside class="side-panel">
+            <div class="number-selector" id="numberSelector">
+                </div>
+
+            <div class="mode-toggles">
+                <button id="numberModeBtn" class="active">Tryb Liczb</button>
+                <button id="notesModeBtn">Tryb Notatek</button>
+                <button id="eraseModeBtn">Gumka</button>
+                <button id="autoNotesCheatBtn">Auto Notatki: WYŁ.</button>
+            </div>
+
+            <div class="solver-methods" id="solverMethods">
+                <h2>Metody Rozwiązywania</h2>
+                </div>
+        </aside>
+    </main>
+    
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
