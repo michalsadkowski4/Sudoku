@@ -119,7 +119,6 @@ export function handleNumberInput(num) {
         ui.renderBoard();
     }
 
-    // Po każdej wstawionej liczbie sprawdź warunek wygranej
     if (currentMode === 'number') {
         checkWinCondition();
     }
@@ -140,6 +139,26 @@ export function handleErase() {
         calculateAndSetAutoNotes();
     } else {
         ui.renderBoard();
+    }
+}
+
+export function performErrorCheck() {
+    const { currentSudokuBoard, initialSudokuBoard } = state.getGameState();
+
+    // FIX: Sprawdź, czy gra jest aktywna, zanim uruchomisz logikę
+    if (initialSudokuBoard.length === 0) {
+        alert("Rozpocznij nową grę, aby sprawdzić błędy.");
+        return;
+    }
+
+    const errors = getErrors(currentSudokuBoard, initialSudokuBoard);
+    state.setErrors(errors);
+    ui.renderBoard();
+    
+    if (errors.length === 0) {
+        alert("Brak błędów na planszy!");
+    } else {
+        alert(`Znaleziono ${errors.length} błędnych komórek.`);
     }
 }
 
