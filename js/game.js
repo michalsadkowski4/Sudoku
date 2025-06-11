@@ -27,13 +27,11 @@ function stopTimer() {
 function checkWinCondition() {
     const { currentSudokuBoard } = state.getGameState();
     
-    // Sprawdź, czy plansza jest pełna
     const isFull = !currentSudokuBoard.some(row => row.includes(0));
     if (!isFull) {
-        return; // Jeśli nie jest pełna, nie ma wygranej
+        return;
     }
 
-    // Jeśli jest pełna, sprawdź błędy
     const errors = getErrors(currentSudokuBoard, state.getGameState().initialSudokuBoard);
     if (errors.length === 0) {
         handleWin();
@@ -72,15 +70,14 @@ export function startNewGame() {
 }
 
 export function resetBoard() {
-    if (confirm('Czy na pewno chcesz zresetować planszę do stanu początkowego?')) {
-        state.resetCurrentBoard();
-        state.setHighlightedNumber(0);
-        state.setAutoNotesActive(false);
-        ui.updateAutoNotesButton();
-        ui.renderBoard();
-        stopTimer();
-        ui.updateTimerDisplay(0);
-    }
+    // FIX: Upewnienie się, że nie ma tu wywołania confirm()
+    state.resetCurrentBoard();
+    state.setHighlightedNumber(0);
+    state.setAutoNotesActive(false);
+    ui.updateAutoNotesButton();
+    ui.renderBoard();
+    stopTimer();
+    ui.updateTimerDisplay(0);
 }
 
 export function handleCellClick(row, col) {
@@ -145,7 +142,6 @@ export function handleErase() {
 export function performErrorCheck() {
     const { currentSudokuBoard, initialSudokuBoard } = state.getGameState();
 
-    // FIX: Sprawdź, czy gra jest aktywna, zanim uruchomisz logikę
     if (initialSudokuBoard.length === 0) {
         alert("Rozpocznij nową grę, aby sprawdzić błędy.");
         return;

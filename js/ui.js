@@ -15,7 +15,7 @@ export const dom = {
     winDifficulty: document.getElementById('winDifficulty'),
     winTime: document.getElementById('winTime'),
     closeWinModalBtn: document.getElementById('closeWinModalBtn'),
-    // Nowe elementy DOM dla modala potwierdzającego
+    // Elementy DOM dla modala potwierdzającego
     confirmModal: document.getElementById('confirmModal'),
     confirmMessage: document.getElementById('confirmMessage'),
     confirmYesBtn: document.getElementById('confirmYesBtn'),
@@ -104,6 +104,18 @@ export function updateAutoNotesButton() {
     const { isAutoNotesModeActive } = getGameState();
     dom.autoNotesToggleBtn.classList.toggle('active', isAutoNotesModeActive);
     dom.autoNotesToggleBtn.textContent = `Auto Notatki: ${isAutoNotesModeActive ? 'WŁ.' : 'WYŁ.'}`;
+}
+
+// --- FIX: DODANIE BRAKUJĄCYCH FUNKCJI ---
+export function showConfirmModal(message, action) {
+    dom.confirmMessage.textContent = message;
+    setOnConfirmAction(action);
+    dom.confirmModal.classList.add('show');
+}
+
+export function hideConfirmModal() {
+    dom.confirmModal.classList.remove('show');
+    setOnConfirmAction(() => {}); // Czyść akcję po zamknięciu
 }
 
 export function formatTime(seconds) {

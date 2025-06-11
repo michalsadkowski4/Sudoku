@@ -12,7 +12,7 @@ const state = {
     highlightedNumber: 0,
     timerInterval: null,
     elapsedSeconds: 0,
-    // Nowe pole na akcję do potwierdzenia
+    // Pole na akcję do potwierdzenia
     onConfirmAction: () => {},
 };
 
@@ -102,7 +102,7 @@ export function setElapsedSeconds(seconds) {
     state.elapsedSeconds = seconds;
 }
 
-// Nowa funkcja do ustawiania akcji
+// FIX: Dodanie brakującej funkcji
 export function setOnConfirmAction(action) {
     state.onConfirmAction = action;
 }
