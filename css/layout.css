@@ -1,3 +1,5 @@
+/* Plik: css/layout.css */
+
 /* Podstawowe resetowanie i czcionki */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -31,7 +33,7 @@ body {
     align-items: center;
 }
 
-/* NOWA STRUKTURA GŁÓWNA */
+/* STRUKTURA GŁÓWNA */
 .main-content {
     display: flex;
     flex-direction: column;
@@ -40,7 +42,7 @@ body {
     padding: 20px 40px;
 }
 
-/* NOWE STYLE DLA ZEGARA */
+/* STYLE DLA ZEGARA */
 .timer-container {
     margin-bottom: 20px;
 }
@@ -52,7 +54,7 @@ body {
     color: var(--text-color);
 }
 
-/* KONTENER NA PLANSZĘ I PANEL */
+/* KONTENER NA PLANSZĘ I PANELE */
 .game-area-container {
     display: flex;
     justify-content: center;
@@ -61,7 +63,9 @@ body {
     width: 100%;
 }
 
-.side-panel {
+/* --- ZMODYFIKOWANA SEKCJA --- */
+/* Style dla obu paneli bocznych (lewy i prawy) */
+.side-panel, .left-panel {
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -72,9 +76,18 @@ body {
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
+/* Dodatkowe style dla kontenera na przyciski w lewym panelu */
+#solver-buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+/* --- KONIEC ZMODYFIKOWANEJ SEKCJI --- */
+
 /* Media queries dla układu */
 @media (min-width: 1920px) {
-    .side-panel {
+    /* Zastosowanie zmiany również tutaj */
+    .side-panel, .left-panel {
         width: 300px;
     }
     .app-header {

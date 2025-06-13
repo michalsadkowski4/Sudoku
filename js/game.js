@@ -106,6 +106,7 @@ export function handleNumberInput(num) {
 
     if (currentMode === 'number') {
         state.updateCell(row, col, num);
+		state.setHighlightedNumber(num);
     } else if (currentMode === 'notes') {
         state.updateNotes(row, col, num);
     }
