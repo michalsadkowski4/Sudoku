@@ -2,6 +2,8 @@
 import * as ui from './ui.js';
 import * as game from './game.js';
 import * as state from './state.js';
+// --- DODANY IMPORT ---
+import { setCookie } from './cookies.js';
 
 export function initializeEventListeners() {
     const staticDom = {
@@ -11,7 +13,6 @@ export function initializeEventListeners() {
         themeToggleBtn: document.getElementById('themeToggleBtn'),
     };
 
-    // Logika dla przycisków Nowa Gra i Reset z użyciem nowego modala
     staticDom.newGameBtn.addEventListener('click', () => {
         ui.showConfirmModal(
             'Czy na pewno chcesz rozpocząć nową grę? Postępy zostaną utracone.',
@@ -65,7 +66,7 @@ export function initializeEventListeners() {
         }
     });
 
-    // Listenery dla nowego modala potwierdzającego
+    // Listenery dla modala potwierdzającego
     ui.dom.confirmYesBtn.addEventListener('click', () => {
         const action = state.getGameState().onConfirmAction;
         if (typeof action === 'function') {
@@ -78,6 +79,17 @@ export function initializeEventListeners() {
 
     // Listener dla modala wygranej
     ui.dom.closeWinModalBtn.addEventListener('click', ui.hideWinModal);
+
+    // --- NOWE LISTENERY ---
+    // Listener dla modala wyników
+    ui.dom.showScoresBtn.addEventListener('click', ui.showScoresModal);
+    ui.dom.closeScoresModalBtn.addEventListener('click', ui.hideScoresModal);
+
+    // Listener dla akceptacji cookies
+    ui.dom.acceptCookiesBtn.addEventListener('click', () => {
+        setCookie('cookie_consent', 'true', 365);
+        ui.dom.cookieConsentBanner.style.display = 'none';
+    });
     
     // Interakcja z klawiaturą
     document.addEventListener('keydown', handleKeyDown);

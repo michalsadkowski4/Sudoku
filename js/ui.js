@@ -1,5 +1,6 @@
 // js/ui.js
 import { getGameState, setOnConfirmAction } from './state.js';
+import * as cookies from './cookies.js';
 
 export const dom = {
     sudokuGrid: document.getElementById('sudokuGrid'),
@@ -11,15 +12,23 @@ export const dom = {
     difficultySelect: document.getElementById('difficultySelect'),
     body: document.body,
     timer: document.getElementById('timer'),
+    // Elementy modala wygranej
     winModal: document.getElementById('winModal'),
     winDifficulty: document.getElementById('winDifficulty'),
     winTime: document.getElementById('winTime'),
     closeWinModalBtn: document.getElementById('closeWinModalBtn'),
-    // Elementy DOM dla modala potwierdzającego
+    // Elementy modala potwierdzającego
     confirmModal: document.getElementById('confirmModal'),
     confirmMessage: document.getElementById('confirmMessage'),
     confirmYesBtn: document.getElementById('confirmYesBtn'),
     confirmNoBtn: document.getElementById('confirmNoBtn'),
+    // --- NOWE ELEMENTY DOM ---
+    showScoresBtn: document.getElementById('showScoresBtn'),
+    scoresModal: document.getElementById('scoresModal'),
+    scoresTableContainer: document.getElementById('scoresTableContainer'),
+    closeScoresModalBtn: document.getElementById('closeScoresModalBtn'),
+    cookieConsentBanner: document.getElementById('cookieConsentBanner'),
+    acceptCookiesBtn: document.getElementById('acceptCookiesBtn'),
 };
 
 export function setupNumberSelector(handler) {
@@ -106,7 +115,6 @@ export function updateAutoNotesButton() {
     dom.autoNotesToggleBtn.textContent = `Auto Notatki: ${isAutoNotesModeActive ? 'WŁ.' : 'WYŁ.'}`;
 }
 
-// --- FIX: DODANIE BRAKUJĄCYCH FUNKCJI ---
 export function showConfirmModal(message, action) {
     dom.confirmMessage.textContent = message;
     setOnConfirmAction(action);
@@ -115,7 +123,7 @@ export function showConfirmModal(message, action) {
 
 export function hideConfirmModal() {
     dom.confirmModal.classList.remove('show');
-    setOnConfirmAction(() => {}); // Czyść akcję po zamknięciu
+    setOnConfirmAction(() => {});
 }
 
 export function formatTime(seconds) {
@@ -153,4 +161,70 @@ export function handleThemeToggle() {
 export function loadTheme() {
     const savedTheme = localStorage.getItem('sudokuTheme') || 'light-theme';
     dom.body.classList.add(savedTheme);
+}
+
+// --- NOWE FUNKCJE DLA WYNIKÓW I COOKIES ---
+
+/**
+ * Pokazuje modal z najlepszymi wynikami.
+ */
+export function showScoresModal() {
+    const wins = cookies.getWins();
+    const difficultyMap = { easy: 1, medium: 2, hard: 3, veryHard: 4 };
+    const difficultyLabels = { easy: 'Łatwy', medium: 'Średni', hard: 'Trudny', veryHard: 'Bardzo Trudny' };
+
+    // Sortowanie: najpierw po poziomie trudności, potem po czasie
+    wins.sort((a, b) => {
+        const diffA = difficultyMap[a.difficulty] || 0;
+        const diffB = difficultyMap[b.difficulty] || 0;
+        if (diffA !== diffB) {
+            return diffA - diffB;
+        }
+        return a.time - b.time;
+    });
+
+    if (wins.length === 0) {
+        dom.scoresTableContainer.innerHTML = "<p>Brak zapisanych wyników.</p>";
+    } else {
+        let tableHTML = `
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Poziom</th>
+                        <th>Czas</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+        wins.forEach(win => {
+            const date = new Date(win.date).toLocaleString('pl-PL');
+            const difficulty = difficultyLabels[win.difficulty] || win.difficulty;
+            const time = formatTime(win.time);
+            tableHTML += `
+                <tr>
+                    <td>${date}</td>
+                    <td>${difficulty}</td>
+                    <td>${time}</td>
+                </tr>
+            `;
+        });
+        tableHTML += `</tbody></table>`;
+        dom.scoresTableContainer.innerHTML = tableHTML;
+    }
+
+    dom.scoresModal.classList.add('show');
+}
+
+export function hideScoresModal() {
+    dom.scoresModal.classList.remove('show');
+}
+
+/**
+ * Inicjalizuje baner cookies.
+ */
+export function initCookieConsent() {
+    if (cookies.getCookie('cookie_consent') !== 'true') {
+        dom.cookieConsentBanner.style.display = 'flex';
+    }
 }

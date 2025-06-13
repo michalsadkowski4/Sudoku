@@ -4,6 +4,8 @@ import { getErrors } from './utils.js';
 import * as state from './state.js';
 import * as ui from './ui.js';
 import { calculateAndSetAutoNotes } from './autoNotes.js';
+// --- DODANY IMPORT ---
+import * as cookies from './cookies.js';
 
 // --- LOGIKA ZEGARA ---
 function startTimer() {
@@ -41,14 +43,25 @@ function checkWinCondition() {
 function handleWin() {
     stopTimer();
     const { elapsedSeconds } = state.getGameState();
+    const difficultyValue = ui.dom.difficultySelect.value;
     const difficultyMap = {
         easy: 'Łatwy',
         medium: 'Średni',
         hard: 'Trudny',
         veryHard: 'Bardzo Trudny'
     };
-    const difficulty = difficultyMap[ui.dom.difficultySelect.value] || 'Niestandardowy';
+    const difficulty = difficultyMap[difficultyValue] || 'Niestandardowy';
     const time = ui.formatTime(elapsedSeconds);
+
+    // --- ZAPIS WYNIKU DO CIASTECZEK ---
+    if (cookies.getCookie('cookie_consent') === 'true') {
+        const winData = {
+            date: new Date().toISOString(),
+            difficulty: difficultyValue,
+            time: elapsedSeconds
+        };
+        cookies.saveWin(winData);
+    }
     
     ui.showWinModal(difficulty, time);
 }
@@ -70,7 +83,6 @@ export function startNewGame() {
 }
 
 export function resetBoard() {
-    // FIX: Upewnienie się, że nie ma tu wywołania confirm()
     state.resetCurrentBoard();
     state.setHighlightedNumber(0);
     state.setAutoNotesActive(false);
@@ -106,7 +118,7 @@ export function handleNumberInput(num) {
 
     if (currentMode === 'number') {
         state.updateCell(row, col, num);
-		state.setHighlightedNumber(num);
+        state.setHighlightedNumber(num);
     } else if (currentMode === 'notes') {
         state.updateNotes(row, col, num);
     }

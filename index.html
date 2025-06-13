@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/grid.css">
     <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/custom.css">
 </head>
 <body>
     <header class="app-header">
@@ -22,6 +23,7 @@
             </select>
             <button id="checkErrorsBtn">Sprawdź Błędy</button>
             <button id="resetBoardBtn">Reset Planszy</button>
+            <button id="showScoresBtn">Najlepsze Wyniki</button>
             <button id="themeToggleBtn">Zmień Motyw</button>
         </div>
     </header>
@@ -36,7 +38,7 @@
                 <div class="solver-methods" id="solverMethods">
                     <h2>Metody Rozwiązywania</h2>
                     <div id="solver-buttons-container">
-                        </div>
+                    </div>
                 </div>
             </aside>
             
@@ -50,8 +52,8 @@
                     <button id="eraseModeBtn">Gumka</button>
                     <button id="autoNotesCheatBtn">Auto Notatki: WYŁ.</button>
                 </div>
-                </aside>
-            </div>
+            </aside>
+        </div>
     </main>
     
     <div id="winModal" class="modal">
@@ -73,6 +75,20 @@
                 <button id="confirmNoBtn" class="confirm-btn no">Nie</button>
             </div>
         </div>
+    </div>
+
+    <div id="scoresModal" class="modal">
+        <div class="modal-content">
+            <h2>Najlepsze Wyniki</h2>
+            <div id="scoresTableContainer">
+                </div>
+            <button id="closeScoresModalBtn" class="confirm-btn" style="margin-top: 20px;">Zamknij</button>
+        </div>
+    </div>
+
+    <div id="cookieConsentBanner" style="display: none;">
+        <p>Szczęść Boże! ta strona wykorzystuje pliki cookies w celu zapisywania Twoich najlepszych wyników.</p>
+        <button id="acceptCookiesBtn">Akceptuję</button>
     </div>
     
     <script type="module" src="js/main.js"></script>
